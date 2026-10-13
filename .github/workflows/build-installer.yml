@@ -1,0 +1,136 @@
+name: Build Sequoia 15.8.1 full installer
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/build-installer.yml'
+      - 'scripts/**'
+permissions:
+  contents: read
+concurrency:
+  group: sequoia-full-installer
+  cancel-in-progress: false
+jobs:
+  build:
+    if: github.repository == 'chaoswen031910-pixel/macos-sequoia-offline' && github.event.repository.private == false
+    runs-on: macos-15-intel
+    timeout-minutes: 180
+    env:
+      REPOSITORY_VISIBILITY: ${{ github.event.repository.visibility }}
+    steps:
+      - name: Check out generic build scripts
+        uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - name: Build and verify Apple's full installer image
+        run: bash scripts/build-install-image.sh
+      - name: Upload checksums and assembly utility
+        uses: actions/upload-artifact@v7
+        with:
+          name: installer-metadata
+          retention-days: 1
+          if-no-files-found: error
+          compression-level: 0
+          path: |
+            output/manifest.json
+            output/assemble-image.py
+            output/README.md
+            output/package-signature.txt
+            output/installer-version.json
+            output/partition-layout.txt
+      - name: Upload image part 01
+        uses: actions/upload-artifact@v7
+        with:
+          name: installer-part-01
+          retention-days: 1
+          if-no-files-found: ignore
+          compression-level: 0
+          path: output/sequoia-15.8.1.img.gz.part001
+      - name: Upload image part 02
+        uses: actions/upload-artifact@v7
+        with:
+          name: installer-part-02
+          retention-days: 1
+          if-no-files-found: ignore
+          compression-level: 0
+          path: output/sequoia-15.8.1.img.gz.part002
+      - name: Upload image part 03
+        uses: actions/upload-artifact@v7
+        with:
+          name: installer-part-03
+          retention-days: 1
+          if-no-files-found: ignore
+          compression-level: 0
+          path: output/sequoia-15.8.1.img.gz.part003
+      - name: Upload image part 04
+        uses: actions/upload-artifact@v7
+        with:
+          name: installer-part-04
+          retention-days: 1
+          if-no-files-found: ignore
+          compression-level: 0
+          path: output/sequoia-15.8.1.img.gz.part004
+      - name: Upload image part 05
+        uses: actions/upload-artifact@v7
+        with:
+          name: installer-part-05
+          retention-days: 1
+          if-no-files-found: ignore
+          compression-level: 0
+          path: output/sequoia-15.8.1.img.gz.part005
+      - name: Upload image part 06
+        uses: actions/upload-artifact@v7
+        with:
+          name: installer-part-06
+          retention-days: 1
+          if-no-files-found: ignore
+          compression-level: 0
+          path: output/sequoia-15.8.1.img.gz.part006
+      - name: Upload image part 07
+        uses: actions/upload-artifact@v7
+        with:
+          name: installer-part-07
+          retention-days: 1
+          if-no-files-found: ignore
+          compression-level: 0
+          path: output/sequoia-15.8.1.img.gz.part007
+      - name: Upload image part 08
+        uses: actions/upload-artifact@v7
+        with:
+          name: installer-part-08
+          retention-days: 1
+          if-no-files-found: ignore
+          compression-level: 0
+          path: output/sequoia-15.8.1.img.gz.part008
+      - name: Upload image part 09
+        uses: actions/upload-artifact@v7
+        with:
+          name: installer-part-09
+          retention-days: 1
+          if-no-files-found: ignore
+          compression-level: 0
+          path: output/sequoia-15.8.1.img.gz.part009
+      - name: Upload image part 10
+        uses: actions/upload-artifact@v7
+        with:
+          name: installer-part-10
+          retention-days: 1
+          if-no-files-found: ignore
+          compression-level: 0
+          path: output/sequoia-15.8.1.img.gz.part010
+      - name: Upload image part 11
+        uses: actions/upload-artifact@v7
+        with:
+          name: installer-part-11
+          retention-days: 1
+          if-no-files-found: ignore
+          compression-level: 0
+          path: output/sequoia-15.8.1.img.gz.part011
+      - name: Upload image part 12
+        uses: actions/upload-artifact@v7
+        with:
+          name: installer-part-12
+          retention-days: 1
+          if-no-files-found: ignore
+          compression-level: 0
+          path: output/sequoia-15.8.1.img.gz.part012
